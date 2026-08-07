@@ -1,0 +1,84 @@
+<div class="container mt-5">
+
+  <h1 class="mb-4">
+    📅 Exam Calendar
+  </h1>
+
+  <% if @subjects.any? %>
+
+    <div class="row">
+
+      <% @subjects.each do |subject| %>
+
+        <div class="col-md-4 mb-4">
+
+          <% days = (subject.exam_date - Date.today).to_i %>
+
+          <div class="card shadow
+          <%= if days <= 7
+              'border-danger'
+            elsif days <= 30
+              'border-warning'
+            else
+              'border-success'
+            end %>">
+
+            <div class="card-body">
+
+              <h4>
+                <%= subject.name %>
+              </h4>
+
+              <p>
+
+                <strong>Exam Date:</strong>
+
+                <%= subject.exam_date.strftime("%d %b %Y") %>
+
+              </p>
+
+              <p class="text-muted">
+
+                <% days = (subject.exam_date - Date.today).to_i %>
+
+                <% if days >= 0 %>
+
+                    <p class="text-success">
+                        ⏳ <%= days %> days left
+                    </p>
+
+                <% else %>
+
+                    <p class="text-danger">
+                       ❌ Exam Finished
+                    </p>
+
+                <% end %>
+
+              </p>
+
+              <%= link_to "View Subject",
+                    subject_path(subject),
+                    class: "btn btn-primary btn-sm" %>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      <% end %>
+
+    </div>
+
+  <% else %>
+
+    <div class="alert alert-info">
+
+      No upcoming exams found.
+
+    </div>
+
+  <% end %>
+
+</div>

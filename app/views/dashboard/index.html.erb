@@ -1,0 +1,143 @@
+<div class="container-fluid">
+
+  <h1 class="mb-4">
+    📚 Dashboard
+  </h1>
+
+  <div class="row">
+
+    <div class="col-md-3 mb-4">
+      <div class="card shadow text-center">
+        <div class="card-body">
+          <h5>Subjects</h5>
+          <h1><%= @subjects %></h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+      <div class="card shadow text-center">
+        <div class="card-body">
+          <h5>Tasks</h5>
+          <h1><%= @tasks %></h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+      <div class="card shadow text-center">
+        <div class="card-body">
+          <h5>Completed</h5>
+          <h1><%= @completed %></h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+      <div class="card shadow text-center">
+        <div class="card-body">
+          <h5>Pending</h5>
+          <h1><%= @pending %></h1>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="card shadow">
+
+    <div class="card-body">
+
+      <h4>📈 Overall Progress</h4>
+
+      <% progress =
+      @tasks > 0 ? ((@completed.to_f/@tasks)*100).round : 0 %>
+
+      <div class="progress mt-3" style="height:30px">
+
+        <div class="progress-bar bg-success"
+             style="width:<%= progress %>%">
+
+          <%= progress %>%
+
+        </div>
+
+      </div>
+
+      <p class="mt-3">
+
+        <strong>
+          <%= @completed %> /
+          <%= @tasks %>
+        </strong>
+
+        Tasks Completed
+
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="card shadow mt-4">
+
+    <div class="card-body">
+
+      <h4>📅 Upcoming Exams</h4>
+
+      <% @upcoming.each do |subject| %>
+
+        <div class="card mt-2">
+
+          <div class="card-body">
+
+            <strong>
+              <%= subject.name %>
+            </strong>
+
+            <br>
+
+            <% if subject.exam_date.present? %>
+
+              <%= subject.exam_date.strftime("%d %b %Y") %>
+
+              <br>
+
+              <small class="text-muted">
+
+                <%= (subject.exam_date-Date.today).to_i %>
+
+                days left
+
+              </small>
+
+            <% else %>
+
+              No Exam Date
+
+            <% end %>
+
+          </div>
+
+        </div>
+
+      <% end %>
+
+    </div>
+
+  </div>
+
+</div>
+<div class="card shadow mt-4">
+  <div class="card-body text-center">
+
+    <h4>💡 Quote of the Day</h4>
+
+    <blockquote class="blockquote mt-3">
+
+      "Small progress every day adds up to big results."
+
+    </blockquote>
+
+  </div>
+</div>

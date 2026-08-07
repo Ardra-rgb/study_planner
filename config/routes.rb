@@ -1,6 +1,30 @@
 Rails.application.routes.draw do
+  get "calendar/index"
+  get "timer/index"
+  get "dashboard/index"
+  
+  get "/login", to: "sessions#new"
+  post "/login", to: "sessions#create"
+  delete "/logout", to: "sessions#destroy"
+  
   get "home/index"
-  root "home#index"
+  root "dashboard#index"
+  get "/register", to: "users#new"
+  post "/register", to: "users#create"
+  
+
+  resources :subjects
+
+  resources :tasks
+  patch "/tasks/:id/toggle",
+      to: "tasks#toggle",
+      as: :toggle_task
+
+  get "/timer", to: "timer#index"
+  get "/calendar", to: "calendar#index"
+  
+
+  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

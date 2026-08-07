@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyText
+  target_hours: 1
+  exam_date: 2026-07-31
+
+two:
+  name: MyString
+  description: MyText
+  target_hours: 1
+  exam_date: 2026-07-31
