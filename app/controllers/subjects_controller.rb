@@ -1,7 +1,21 @@
 class SubjectsController < ApplicationController
 
   def index
-    @subjects = Subject.all
+
+    if params[:search].present?
+
+      @subjects =
+        Subject.where(
+          "name LIKE ?",
+          "%#{params[:search]}%"
+        )
+
+    else
+
+      @subjects = Subject.all
+
+    end
+
   end
 
   def new

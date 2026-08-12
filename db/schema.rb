@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_05_061926) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_10_095700) do
   create_table "subjects", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
@@ -29,6 +29,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_05_061926) do
     t.index ["subject_id"], name: "index_tasks_on_subject_id"
   end
 
+  create_table "topics", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.integer "subject_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subject_id"], name: "index_topics_on_subject_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email"
@@ -38,4 +46,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_05_061926) do
   end
 
   add_foreign_key "tasks", "subjects"
+  add_foreign_key "topics", "subjects"
 end

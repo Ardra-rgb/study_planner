@@ -59,6 +59,36 @@
 
       <hr>
 
+      <hr>
+
+<h4>📖 Topics</h4>
+
+<% if @subject.topics.any? %>
+
+  <ul class="list-group mb-3">
+
+    <% @subject.topics.each do |topic| %>
+
+      <li class="list-group-item">
+        📖 <%= topic.name %>
+      </li>
+
+    <% end %>
+
+  </ul>
+
+<% else %>
+
+  <p class="text-muted">
+    No topics added yet.
+  </p>
+
+<% end %>
+
+<%= link_to "+ Add Topic",
+      new_subject_topic_path(@subject),
+      class: "btn btn-primary mb-3" %>
+
       <!-- Tasks -->
 
       <h4 class="mb-3">

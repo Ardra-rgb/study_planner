@@ -26,70 +26,80 @@
 
   <body>
 
-<div class="container-fluid">
+    <% if logged_in? %>
 
-  <div class="row">
+      <div class="container-fluid">
 
-    <!-- Sidebar -->
+        <div class="row">
 
-    <div class="col-md-2 bg-dark text-white vh-100 p-4 position-fixed">
+          <!-- Sidebar -->
 
-      <h3 class="mb-4">📚 Study Planner</h3>
+          <div class="col-md-2 bg-dark text-white vh-100 p-4 position-fixed">
 
-      <div class="d-grid gap-2">
+           <h3 class="mb-4">📚 Study Planner</h3>
 
-        <%= link_to "🏠 Dashboard",
-              root_path,
-              class: "btn btn-dark text-start" %>
+           <div class="d-grid gap-2">
 
-        <%= link_to "📚 Subjects",
-              subjects_path,
-              class: "btn btn-dark text-start" %>
+             <%= link_to "🏠 Dashboard",
+                  root_path,
+                  class: "btn btn-dark text-start" %>
 
-        <%= link_to "📝 Tasks",
-              new_task_path,
-              class: "btn btn-dark text-start" %>
+             <%= link_to "📚 Subjects",
+                  subjects_path,
+                  class: "btn btn-dark text-start" %>
 
-        <%= link_to "📅 Calendar",
-              calendar_path,
-              class: "btn btn-dark text-start" %>
+             <%= link_to "📝 Tasks",
+                  new_task_path,
+                  class: "btn btn-dark text-start" %>
 
-        <%= link_to "📈 Progress",
-              "#",
-              class: "btn btn-dark text-start" %>
+             <%= link_to "📅 Calendar",
+                  calendar_path,
+                  class: "btn btn-dark text-start" %>
 
-        <%= link_to "⏱ Study Timer",
-              timer_path,
-              class: "btn btn-dark text-start" %>
+             <%= link_to "📈 Progress",
+                  progress_path,
+                  class: "btn btn-dark text-start" %>
 
-        <%= link_to "👤 Profile",
-              "#",
-              class: "btn btn-dark text-start" %>
+             <%= link_to "⏱ Study Timer",
+                  timer_path,
+                  class: "btn btn-dark text-start" %>
 
-        <%= link_to "⚙ Settings",
-              "#",
-              class: "btn btn-dark text-start" %>
+             <%= link_to "👤 Profile",
+                  "#",
+                  class: "btn btn-dark text-start" %>
 
-        <%= button_to "🚪 Logout",
-              logout_path,
-              method: :delete,
-              class: "btn btn-danger text-start mt-4 w-100" %>
+             <%= link_to "⚙ Settings",
+                  "#",
+                  class: "btn btn-dark text-start" %>
+
+             <%= button_to "🚪 Logout",
+                  logout_path,
+                  method: :delete,
+                  class: "btn btn-danger text-start mt-4 w-100" %>
+
+           </div>
+
+        </div>
+
+        <!-- Main Content -->
+
+        <div class="col-md-10 offset-md-2 p-5">
+
+          <%= yield %>
+
+        </div>
 
       </div>
 
     </div>
 
-    <!-- Main Content -->
+  <% else %>
 
-    <div class="col-md-10 offset-md-2 p-5">
+    <!-- Login / Register pages -->
 
-      <%= yield %>
+    <%= yield %>
 
-    </div>
-
-  </div>
-
-</div>
+  <% end %>
 
 </body>
 </html>

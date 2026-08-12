@@ -1,55 +1,235 @@
 <div class="container mt-5">
 
+  <!-- Header -->
+
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>📚 My Subjects</h2>
+
+    <h1>
+      📚My Subjects
+    </h1>
 
     <%= link_to "+ Add Subject",
-      new_subject_path,
-      class: "btn btn-success" %>
+          new_subject_path,
+          class: "btn btn-success" %>
+
   </div>
+
+
+  <!-- Search -->
+
+  <div class="mb-4">
+
+    <%= form_with url: subjects_path,
+          method: :get,
+          local: true do |form| %>
+
+      <div class="input-group">
+
+        <%= form.text_field :search,
+              value: params[:search],
+              placeholder: "🔍 Search Subjects...",
+              class: "form-control" %>
+
+        <%= form.submit "Search",
+              class: "btn btn-primary" %>
+
+      </div>
+
+    <% end %>
+
+  </div>
+
+
+  <!-- Subjects -->
 
   <div class="row">
 
-  <% @subjects.each do |subject| %>
+    <% if @subjects.any? %>
 
-    <div class="col-md-4 mb-4">
-      <div class="card shadow-sm">
-        <div class="card-body">
+      <% @subjects.each do |subject| %>
 
-          <h4><%= subject.name %></h4>
+        <% total = subject.tasks.count %>
 
-          <p class="text-muted">
-            0 Tasks
-          </p>
+        <% completed =
+             subject.tasks.where(completed: true).count %>
 
-          <div class="progress mb-3">
-            <div class="progress-bar bg-success" style="width:75%">
-              0%
+        <% progress =
+             total > 0 ? ((completed.to_f / total) * 100).round : 0 %>
+
+
+        <!-- Subject Card -->
+
+        <div class="col-md-4 mb-4">
+
+          <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+              <h4 class="mb-3">
+                <%= subject.name %>
+              </h4>
+
+
+              <!-- Task Count -->
+
+              <p class="text-muted">
+
+                <%= total %>
+
+                <%= total == 1 ? "Task" : "Tasks" %>
+
+              </p>
+
+
+              <!-- Progress -->
+
+              <div class="progress mb-3"
+                   style="height: 22px;">
+
+                <div class="progress-bar bg-success"
+                     style="width: <%= progress %>%">
+
+                  <%= progress %>%
+
+                </div>
+
+              </div>
+
+
+              <!-- Buttons -->
+
+              <div class="d-flex gap-2">
+
+                <%= link_to "View",
+                      subject_path(subject),
+                      class: "btn btn-primary btn-sm" %>
+
+
+                <%= link_to "Edit",
+                      edit_subject_path(subject),
+                      class: "btn btn-warning btn-sm" %>
+
+
+                <!-- Delete Button -->
+
+                <button type="button"
+                        class="btn btn-danger btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#deleteModal<%= subject.id %>">
+
+                  Delete
+
+                </button>
+
+              </div>
+
             </div>
+
           </div>
 
-          <%= link_to "View",
-            subject_path(subject),
-            class: "btn btn-primary btn-sm" %>
+        </div>
 
-          <%= link_to "Edit",
-            edit_subject_path(subject),
-            class: "btn btn-warning btn-sm" %>
 
-          <%= button_to "Delete",
-            subject_path(subject),
-            method: :delete,
-            class: "btn btn-danger btn-sm",
-            data: { turbo_confirm: "Are you sure?" } %>
+        <!-- Delete Modal -->
+
+        <div class="modal fade"
+             id="deleteModal<%= subject.id %>"
+             tabindex="-1"
+             aria-labelledby="deleteModalLabel<%= subject.id %>"
+             aria-hidden="true">
+
+          <div class="modal-dialog">
+
+            <div class="modal-content">
+
+
+              <!-- Modal Header -->
+
+              <div class="modal-header">
+
+                <h5 class="modal-title"
+                    id="deleteModalLabel<%= subject.id %>">
+
+                  ⚠️ Delete Subject
+
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+                </button>
+
+              </div>
+
+
+              <!-- Modal Body -->
+
+              <div class="modal-body">
+
+                Are you sure you want to delete
+
+                <strong>
+                  <%= subject.name %>
+                </strong>
+
+                ?
+
+                <br>
+
+                <small class="text-danger">
+                  This action cannot be undone.
+                </small>
+
+              </div>
+
+
+              <!-- Modal Footer -->
+
+              <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+
+                  Cancel
+
+                </button>
+
+
+                <%= button_to "Delete",
+                      subject_path(subject),
+                      method: :delete,
+                      class: "btn btn-danger" %>
+
+              </div>
+
+
+            </div>
+
+          </div>
 
         </div>
-      </div>
-    </div>
 
-  <% end %>
+      <% end %>
+
+
+    <% else %>
+
+      <!-- No Subjects -->
+
+      <div class="col-12">
+
+        <div class="alert alert-info text-center">
+
+          📚 No subjects found.
+
+        </div>
+
+      </div>
+
+    <% end %>
+
+  </div>
 
 </div>
-
-    
-
-        

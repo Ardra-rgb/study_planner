@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get "topics/new"
+  get "topics/create"
+  get "charts/index"
+  get "progress/index"
   get "calendar/index"
   get "timer/index"
   get "dashboard/index"
@@ -7,8 +11,9 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
   
+
   get "home/index"
-  root "dashboard#index"
+  root "sessions#new"
   get "/register", to: "users#new"
   post "/register", to: "users#create"
   
@@ -22,7 +27,21 @@ Rails.application.routes.draw do
 
   get "/timer", to: "timer#index"
   get "/calendar", to: "calendar#index"
+  get "/progress", to: "progress#index"
+  get "/charts", to: "charts#index"
   
+
+  get "/subjects/:subject_id/topics/new",
+    to: "topics#new",
+    as: :new_subject_topic
+
+  post "/subjects/:subject_id/topics",
+    to: "topics#create",
+    as: :subject_topics
+
+  delete "/subjects/:id",
+       to: "subjects#destroy",
+       as: :delete_subject
 
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
