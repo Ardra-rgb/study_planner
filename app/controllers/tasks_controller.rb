@@ -54,8 +54,10 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(
       :title,
+      :description,
       :completed,
-      :subject_id
+      :subject_id,
+      :study_pdf
     )
   end
 

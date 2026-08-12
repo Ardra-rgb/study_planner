@@ -5,7 +5,7 @@
 
       <h2 class="mb-4">📝 Add New Task</h2>
 
-      <%= form_with model: @task, local: true do |form| %>
+      <%= form_with model: @task, local: true, multipart: true do |form| %>
 
         <div class="mb-3">
           <%= form.label :title, class: "form-label" %>
@@ -24,6 +24,12 @@
                 :name,
                 { prompt: "Select a Subject" },
                 { class: "form-select" } %>
+        </div>
+        <div class="mb-3">
+          <%= form.label :study_pdf, "Upload Study Material (PDF)" %>
+          <%= form.file_field :study_pdf,
+            class: "form-control",
+            accept: "application/pdf" %>
         </div>
 
         <div class="form-check mb-4">
